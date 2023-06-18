@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController as Auths;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KonsultasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', [ProdukController::class, 'index'])->name('produk');
+
+
+Route::get('/auth/login', [Auths::class, 'index']);
+Route::post('/auth/login', [Auths::class, 'login'])->name('login');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('konsultasi', KonsultasiController::class);
+    
+    Route::get('/logout', [Auths::class, 'logout'])->name('logout');
 });
