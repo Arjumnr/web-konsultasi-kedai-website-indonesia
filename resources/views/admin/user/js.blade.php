@@ -9,27 +9,24 @@
         var table = $('#tableJenis').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('konsultasi.index') }}",
+            ajax: "{{ route('user.index') }}",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
                 },
                 {
-                    data: 'nama',
-                    name: 'nama'
+                    data: 'name',
+                    name: 'name'
                 },
                 {
-                    data: 'no_hp',
-                    name: 'no_hp'
+                    data: 'username',
+                    name: 'username'
                 },
                 {
-                    data: 'status',
-                    name: 'status'
+                    data: 'role_id',
+                    name: 'role_id'
                 },
-                {
-                    data: 'deskripsi',
-                    name: 'deskripsi'
-                },
+
                 {
                     data: 'action',
                     name: 'action',
@@ -46,18 +43,15 @@
             // console.log(table.data());
         } else {
             table = $('#tableJenis').DataTable({
-                "ajax": "{{ route('konsultasi.index') }}",
+                "ajax": "{{ route('user.index') }}",
                 "columns": [{
-                        "data": "nama"
+                        "data": "name"
                     },
                     {
-                        "data": "no_hp"
+                        "data": "username"
                     },
                     {
-                        "data": "status"
-                    },
-                    {
-                        "data": "deskripsi"
+                        "data": "role_id"
                     },
                     {
                         "data": "action"
@@ -91,16 +85,16 @@
 
             var data_id = $(this).data('id');
 
-            $.get("{{ route('konsultasi.index') }}" + '/' + data_id + '/edit', function(data) {
+            $.get("{{ route('user.index') }}" + '/' + data_id + '/edit', function(data) {
                 console.log("data id = " + data);
                 $('#modalHeading').html("Edit User");
                 $('#btnSave').val("edit-data");
                 $('#ajaxModel').modal('show');
                 $('#data_id').val(data_id);
-                $('#nama').val(data.nama);
-                $('#no_hp').val(data.no_hp);
-                $('#status').val(data.status).trigger('change');
-                $('#deskripsi').val(data.deskripsi);
+                $('#username').val(data.username);
+                $('#password').val(data.password);
+                $('#name').val(data.name);
+                $('#role_id').val(data.role_id).trigger('change');
 
             })
 
@@ -112,7 +106,7 @@
             // $(this).html('Sending..');
             $.ajax({
                 data: $('#formID').serialize(),
-                url: "{{ route('konsultasi.store') }}",
+                url: "{{ route('user.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
@@ -177,7 +171,7 @@
                     console.log(id);
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ route('konsultasi.store') }}" + '/' + id,
+                        url: "{{ route('user.store') }}" + '/' + id,
                         dataType: 'json',
 
                         success: function(data) {

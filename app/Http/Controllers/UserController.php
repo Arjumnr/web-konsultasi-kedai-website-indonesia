@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ModelDataKonsultasi;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
-
-class KonsultasiController extends Controller
+class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $data = ModelDataKonsultasi::all();
+        $data = User::all();
+
         try {
             if ($request->ajax()) {
-                return DataTables::of($data)
+                return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-success btn-sm edit"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
@@ -24,7 +25,7 @@ class KonsultasiController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
             }
-            return view('admin.konsultasi.index');
+            return view('admin.user.index');
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
@@ -32,17 +33,14 @@ class KonsultasiController extends Controller
     public function store(Request $request)
     {
         try {
-            ModelDataKonsultasi::updateOrCreate(
+            User::updateOrCreate(
                 ['id' => $request->data_id],
                 [
-                    'nama' => $request->nama,
-                    'no_hp' => $request->no_hp,
-                    'status' => $request->status,
-                    'deskripsi' => $request->deskripsi,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s')
+                    'name' => $request->name,
+                    'username' => $request->username,
+                    'password' => Hash::make($request->password),
+                    'role' => $request->role,
                 ]
-
             );
             return response()->json(['status' => 'success', 'message' => 'Save data successfully.']);
         } catch (\Exception $e) {
@@ -52,15 +50,30 @@ class KonsultasiController extends Controller
 
     public function edit($id)
     {
-        $dataUser = ModelDataKonsultasi::find($id);
+        $dataUser = User::find($id);
         return response()->json($dataUser);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = User::find($id);
+        try {
+            $data->update([
+                'name' => $request->name,
+                'username' => $request->username,
+                'password' => $request->password,
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Update data successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 
 
     public function destroy($id)
     {
         try {
-            ModelDataKonsultasi::find($id)->delete();
+            User::find($id)->delete();
             return response()->json(['status' => 'success', 'message' => 'Data deleted successfully.']);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

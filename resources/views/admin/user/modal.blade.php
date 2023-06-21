@@ -13,28 +13,27 @@
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label>Nama</label>
-                            <input type="text" class="form-control" name="nama" id="nama" required />
+                            <label>Username</label>
+                            <input type="text" class="form-control" name="username" id="username" required />
                         </div>
                         <div class="form-group col-md-6">
-                            <label>No. Hp</label>
-                            <input type="text" class="form-control" name="no_hp" id="no_hp" required />
+                            <label>Password</label>
+                            <input type="text" class="form-control" name="password" id="password" required />
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label>Status</label>
-                            <select class="form-control select2" id="status" name="status" style="width:100%">
-                                <option value="" disabled selected>--- Pilih Status ---</option>
-                                <option value="ACC">ACC</option>
-                                <option value="PENDING">PENDING</option>
-                                <option value="REJECT">REJECT</option>
-                            </select>
+                            <label>Name</label>
+                            <input class="form-control" name="name" id="name" rows="3"></input>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Deskrips</label>
-                            <textarea class="form-control" name="deskripsi" id="deskripsi" rows="3"></textarea>
+                            <label>Role</label>
+                            <select class="form-control select2" id="role_id" name="role_id" style="width:100%">
+                                <option value="" disabled selected>--- Pilih Role ---</option>
+                                <option value="1">Superadmin</option>
+                                <option value="2">Admin</option>
+                            </select>
                         </div>
                     </div>
                 </div>

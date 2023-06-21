@@ -11,7 +11,7 @@
         <ul class="sidebar-menu">
             <li class="menu-header">Main Menu</li>
             <li class="@stack('dashboard')">
-                <a class="nav-link" href="{{ url('dashboard') }}">
+                <a class="nav-link" href="/">
                     <i class="fas fa-fire"></i>
                     <span>Dashboard</span>
                 </a>
@@ -22,7 +22,15 @@
                     <span>Data Konsultasi</span>
                 </a>
             </li>
-            
+            @if (Auth::user()->role_id == '1')
+                <li class="@stack('user')">
+                    <a class="nav-link" href="{{ url('user') }}">
+                        <i class="fas fa-fire"></i>
+                        <span>Data User</span>
+                    </a>
+                </li>
+            @endif
+
         </ul>
     </aside>
 </div>

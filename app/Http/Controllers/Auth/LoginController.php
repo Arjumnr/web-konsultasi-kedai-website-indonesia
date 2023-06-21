@@ -53,7 +53,7 @@ class LoginController extends Controller
         if (auth()->attempt($data)) {
             return redirect()->route('dashboard');
         } else {
-            return redirect()->back()->with('error', 'Username atau Password salah');
+            return redirect()->route('login')->with('error', 'Username atau Password salah');
         }
     }
 
